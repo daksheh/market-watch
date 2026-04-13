@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>market-watch</title>
+  <style>
+    body { font-family: monospace; margin: 20px; }
+    table { border-collapse: collapse; margin-top: 8px; }
+    td, th { border: 1px solid #ccc; padding: 4px 8px; font-size: 13px; }
+    input, button { font-family: monospace; font-size: 13px; padding: 4px 6px; }
+    #log { margin-top: 10px; max-height: 180px; overflow-y: auto; font-size: 12px; border: 1px solid #ccc; padding: 6px; }
+    #log div { border-bottom: 1px solid #eee; padding: 2px 0; }
+    #algoBox { margin-top: 10px; border: 1px solid #ccc; padding: 8px; display: inline-block; }
+    .section { margin-top: 14px; }
+  </style>
+</head>
+<body>
+
+<h3>market-watch</h3>
+
+<!-- Search -->
+<div class="section">
+  <input id="searchInput" type="text" placeholder="symbol or company" list="suggestions" autocomplete="off" style="width:260px" />
+  <datalist id="suggestions"></datalist>
+</div>
+
+<!-- Quote -->
+<div class="section">
+  <b id="sym">—</b> &nbsp; <span id="price">$0.00</span> &nbsp; <span id="change">—</span>
+  <table>
+    <tr><th>OPEN</th><th>HIGH</th><th>LOW</th><th>PREV CLOSE</th></tr>
+    <tr>
+      <td id="open">—</td>
+      <td id="high">—</td>
+      <td id="low">—</td>
+      <td id="prevClose">—</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Algo panel -->
+<div class="section">
+  <button id="algoBtn">Algo: OFF</button>
+  <div id="algoBox">
+    Signal: <b id="algoSignal">—</b> &nbsp;
+    Conf: <span id="algoConf">—</span> &nbsp;
+    VWAP: <span id="algoVWAP">—</span> &nbsp;
+    Target: <span id="algoTarget">—</span> &nbsp;
+    Stop: <span id="algoStop">—</span>
+  </div>
+</div>
+
+<!-- Orders -->
+<div class="section">
+  <input id="qty" type="number" placeholder="qty" min="1" style="width:70px" />
+  <input id="limitPrice" type="number" placeholder="limit (opt)" step="0.01" style="width:110px" />
+  <button onclick="addOrder('BUY')">BUY</button>
+  <button onclick="addOrder('SELL')">SELL</button>
+
+  <table style="margin-top:8px">
+    <thead><tr><th>Symbol</th><th>Side</th><th>Qty</th><th>Price</th><th>Status</th><th></th></tr></thead>
+    <tbody id="ordersBody"></tbody>
+  </table>
+</div>
+
+<!-- Activity log -->
+<div id="log"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
