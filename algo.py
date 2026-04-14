@@ -19,12 +19,12 @@ How it works
      - stop_price    = entry ∓ stop_loss_pct %
      - confidence    = scaled deviation / threshold  (capped at 1.0)
 
-In-progress / TODO
+ TODO
 ------------------
-- ML signal confidence layer  (see ml_signals.py — not yet integrated)
-- Backtesting harness          (see backtester.py — stub only)
+- ML signal confidence layer  
+- Backtesting harness
 - ATR-based dynamic stop-loss
-- Order-book depth confirmation (requires L2 data feed)
+- Order-book depth confirmation
 - Multi-symbol portfolio heat scoring
 """
 
@@ -35,10 +35,6 @@ from collections import deque
 from dataclasses import dataclass, field
 from typing import Deque, Dict, Optional, Tuple
 
-
-# ---------------------------------------------------------------------------
-# Configuration
-# ---------------------------------------------------------------------------
 
 @dataclass
 class AlgoConfig:
@@ -66,9 +62,6 @@ class AlgoConfig:
     min_ticks: int = 5
 
 
-# ---------------------------------------------------------------------------
-# Per-symbol state
-# ---------------------------------------------------------------------------
 
 @dataclass
 class SymbolState:
@@ -97,9 +90,6 @@ class SymbolState:
         return sum(self.volume_history) / len(self.volume_history)
 
 
-# ---------------------------------------------------------------------------
-# Engine
-# ---------------------------------------------------------------------------
 
 class VWAPScalpingEngine:
     """
@@ -114,10 +104,7 @@ class VWAPScalpingEngine:
         self.config: AlgoConfig = config or AlgoConfig()
         self._states: Dict[str, SymbolState] = {}
 
-    # ------------------------------------------------------------------
-    # Public API
-    # ------------------------------------------------------------------
-
+   
     def evaluate(self, symbol: str, price: float, volume: float = 0.0) -> dict:
         """
         Ingest a tick and return a signal dict.
@@ -163,10 +150,7 @@ class VWAPScalpingEngine:
         if symbol in self._states:
             del self._states[symbol]
 
-    # ------------------------------------------------------------------
-    # Internal helpers
-    # ------------------------------------------------------------------
-
+  
     def _get_or_create(self, symbol: str) -> SymbolState:
         if symbol not in self._states:
             self._states[symbol] = SymbolState(
