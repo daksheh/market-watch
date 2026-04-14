@@ -138,6 +138,14 @@ market-watch/
 
 ---
 
+## To Do
+- ML signal confidence layer  
+- Backtesting harness
+- ATR-based dynamic stop-loss
+- Order-book depth confirmation
+- Multi-symbol portfolio heat scoring
+
+
 ## Disclaimer
 
 For educational and research purposes only. Not financial advice. Do not connect to a live brokerage without fully understanding the risks.
